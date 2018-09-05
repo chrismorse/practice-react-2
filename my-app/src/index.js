@@ -52,6 +52,7 @@ class Game extends React.Component {
       }],
       stepNumber: 0,
       xIsNext: true,
+      sortDesc: true,
     };
   }
 
@@ -79,9 +80,15 @@ class Game extends React.Component {
       xIsNext: (step % 2 === 0),
     });
   }
+
+  changeSort() {
+    this.setState({
+      sortDesc: !this.state.sortDesc,
+    });
+  }
   
   render() {
-    const history = this.state.history;
+    let history = this.state.history;
     const current = history[this.state.stepNumber];
     const winner = calculateWinner(current.squares);
 
@@ -117,7 +124,8 @@ class Game extends React.Component {
         </div>
         <div className="game-info">
           <div>{status}</div>
-          <ol>{moves}</ol>
+          <div><button onClick={() => this.changeSort()}>Change Sort</button></div>
+          <ol>{this.state.sortDesc ? moves : moves.reverse()}</ol>
         </div>
       </div>
     );
